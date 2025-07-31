@@ -18,6 +18,19 @@ In the paper we also define several ways to produce graph lineages from other li
 
 ![A thickened path graph lineage.](thickened_paths.png)
 
+- Skeletal cross product: takes in two lineages G and H. Each level $L$ of the skeletal cross product consists of all products $g \times h$ of pairs of graphs $g,h$ whose level numbers sum to $L$. New successor relations are defined to be consistent with the categorical construction given in the paper.
+
+- Skeletal box product: takes in two lineages G and H. Each level $L$ of the skeletal box product consists of all products $g \box h$ of pairs of graphs $g,h$ whose level numbers sum to $L$.
+
+- And the union of those products, the boxcross or "strong" product.
+
+Here are pictures of all three kinds of products, all between two lineages of path graphs:
+
+| ![Skel Box.](path_box.png) | ![Skel Cross.](path_cross.png) | ![Skel Boxcross.](path_boxcross.png) |
+|:-:|:-:|:-:|
+|Skeletal Box Product|Skeletal Cross Product|Skeletal Strong Product|
+
+
 ## glineage.py
 
 This file contains the GraphLineage class, as well as subclasses for specific kinds of graph lineages (path graphs, random graphs, grid graphs).
@@ -26,9 +39,9 @@ Create a GraphLineage object by passing two lists of torch sparse tensors:
 
 ` g_lin = GraphLineage(graph_list, prolong_list) `
 
-graph_list is a list of sparse tensors where the $i$th list element is an $n_i \times n_i$ sparse tensor representing the adjacency matrix of the $i$th graph.
+graph_list is a list of sparse tensors where the $i$ th list element is an $n_i \times n_i$ sparse tensor representing the adjacency matrix of the $i$ th graph.
 
-prolong_list is a list of sparse tensors where the $i$th list element is an $n_i \times n_{i+1}$ sparse tensor representing the connections between the $i$th graph ans the $i+1$st graph.
+prolong_list is a list of sparse tensors where the $i$th list element is an $n_i \times n_{i+1}$ sparse tensor representing the connections between the $i$ th graph ans the $i+1$ st graph.
 
 Levels of the graph lineage can be decorated with feature matrices with
 
@@ -44,4 +57,4 @@ Skeletal products are calculated by overloading python's `+, *,` and `%` binary 
 - G * H: skeletal cross product of G and H.
 - G % H: the skeletal "strong" product, AKA the union of G+H and G*H.
 
-The glineage.py file also contains utility functions for converting between a GraphLineage object and a saved .npz compact format, as well as utilities for converting between various kinds of sparse tensors (e.g. Torch -> numpy). 
+The glineage.py file also contains utility functions for converting between a GraphLineage object and a saved .npz compact format, as well as utilities for converting between various kinds of sparse tensors (e.g. Torch -> numpy).
